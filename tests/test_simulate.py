@@ -1,9 +1,13 @@
-
+import os
+import sys
 import unittest
 import numpy as np
-from generate import forward_equations
-from simulate import simulate_observed_data
-from recover import inverse_equations
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+from src.generate import forward_equations
+from src.simulate import simulate_observed_data
+from src.recover import inverse_equations
 
 class TestSampleSizeEffects(unittest.TestCase):
 
@@ -16,6 +20,10 @@ class TestSampleSizeEffects(unittest.TestCase):
             alpha, nu, tau = 1.2, 1.0, 0.3  # Fixed true values
             R_pred, M_pred, V_pred = forward_equations(alpha, nu, tau)
             R_obs, M_obs, V_obs = simulate_observed_data(R_pred, M_pred, V_pred, N)
+
+            # Ensure R_obs is a probability
+            self.assertTrue(0 <= R_obs <= 1, f"R_obs out of bounds: {R_obs}")
+
             nu_est, alpha_est, tau_est = inverse_equations(R_obs, M_obs, V_obs)
 
             # Compute squared error manually
@@ -29,3 +37,4 @@ class TestSampleSizeEffects(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
