@@ -5,9 +5,10 @@ import numpy as np
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from generate import forward_equations 
+from generate import forward_equations #import error? 
 
 class TestForwardEquations(unittest.TestCase):
+    #checks that when function_equations is given valid imputs it produces valid outputs 
     def test_valid_inputs(self):
         """Test if forward_equations returns valid outputs for in-range inputs."""
         alpha, nu, tau = 1.0, 1.0, 0.3  # Valid values in the defined range

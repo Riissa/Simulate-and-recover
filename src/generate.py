@@ -1,13 +1,24 @@
 # src/generate.py
+#use equation 1, 2 and 3 to generate predicted summary stats 
 
 import numpy as np
 
 def forward_equations(alpha, nu, tau):
-    """Computes predicted summary statistics from model parameters.
-    Temporary version to pass all unit tests.
     """
-
-    # ✅ Step 1: Check for invalid inputs (raise ValueError)
+    Computes predicted summary statistics (R_pred, M_pred, V_pred)
+    using the forward EZ diffusion model equations.
+    
+    Parameters:
+    - alpha: Boundary separation (between 0.5 and 2)
+    - nu: Drift rate (between 0.5 and 2)
+    - tau: Non-decision time (between 0.1 and 0.5)
+    
+    Returns:
+    - R_pred: Predicted accuracy rate
+    - M_pred: Predicted mean reaction time
+    - V_pred: Predicted variance of reaction time
+    """
+    # Check for invalid inputs
     if alpha < 0.5 or alpha > 2:
         raise ValueError("alpha must be between 0.5 and 2")
     if nu < 0.5 or nu > 2:
@@ -15,14 +26,13 @@ def forward_equations(alpha, nu, tau):
     if tau < 0.1 or tau > 0.5:
         raise ValueError("tau must be between 0.1 and 0.5")
 
-    # ✅ Step 2: Compute dummy outputs (ensuring they are valid)
-    R_pred = max(0, min(1, 0.7))  # Ensures R_pred is between 0 and 1
-    M_pred = tau + (alpha / (2 * nu))  # Some placeholder formula
-    V_pred = (alpha / (2 * nu**3))  # Some placeholder formula
+    # Compute y
+    y = np.exp(-alpha * nu)
 
-    # ✅ Step 3: Ensure outputs are finite numbers
-    if not all(map(np.isfinite, [R_pred, M_pred, V_pred])):
-        raise ValueError("Function returned non-finite values")
+    # Compute predicted summary statistics
+    R_pred = 1 / (y + 1)
+    M_pred = tau + (alpha / (2 * nu)) * ((1 - y) / (1 + y))
+    V_pred = (alpha / (2 * nu**3)) * ((1 - 2 * alpha * nu * y - y**2) / (y + 1)**2)
 
     return R_pred, M_pred, V_pred
 
