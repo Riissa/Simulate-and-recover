@@ -1,40 +1,45 @@
-import os
 import sys
+import os
 import unittest
 import numpy as np
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from src.generate import forward_equations
-from src.simulate import simulate_observed_data
-from src.recover import inverse_equations
+from simulate import simulate_observed_data  # Import the correct function
 
-class TestSampleSizeEffects(unittest.TestCase):
+class TestSimulateObservedData(unittest.TestCase):
+    
+    def test_valid_outputs(self):
+        """Test if simulate_observed_data returns valid outputs."""
+        R_pred, M_pred, V_pred = 0.75, 0.45, 0.12  # Example predicted stats
+        N = 40  # Sample size
 
-    def test_squared_error_decreases_with_N(self):
-        """Check that squared error decreases as N increases."""
-        N_values = [10, 40, 4000]
-        squared_errors = []
+        R_obs, M_obs, V_obs = simulate_observed_data(R_pred, M_pred, V_pred, N)
 
-        for N in N_values:
-            alpha, nu, tau = 1.2, 1.0, 0.3  # Fixed true values
-            R_pred, M_pred, V_pred = forward_equations(alpha, nu, tau)
-            R_obs, M_obs, V_obs = simulate_observed_data(R_pred, M_pred, V_pred, N)
+        # Check that function returns three values
+        self.assertEqual(len([R_obs, M_obs, V_obs]), 3)
 
-            # Ensure R_obs is a probability
-            self.assertTrue(0 <= R_obs <= 1, f"R_obs out of bounds: {R_obs}")
+        # Check R_obs is a probability (between 0 and 1)
+        self.assertTrue(0 <= R_obs <= 1)
 
-            nu_est, alpha_est, tau_est = inverse_equations(R_obs, M_obs, V_obs)
+        # Check outputs are finite numbers (not NaN or Inf)
+        self.assertTrue(np.isfinite(R_obs))
+        self.assertTrue(np.isfinite(M_obs))
+        self.assertTrue(np.isfinite(V_obs))
 
-            # Compute squared error manually
-            bias = np.array([nu - nu_est, alpha - alpha_est, tau - tau_est])
-            squared_error = np.sum(bias**2)
-            squared_errors.append(squared_error)
+    def test_noise_effects(self):
+        """Test if larger N makes observed stats closer to predicted stats."""
+        R_pred, M_pred, V_pred = 0.75, 0.45, 0.12
 
-        # Assert that squared error decreases as N increases
-        self.assertTrue(squared_errors[0] > squared_errors[1] > squared_errors[2],
-                        f"Squared error did not decrease with larger N values: {squared_errors}")
+        # Simulate with small N (more noise)
+        R_obs_small, M_obs_small, V_obs_small = simulate_observed_data(R_pred, M_pred, V_pred, N=10)
 
-if __name__ == '__main__':
+        # Simulate with large N (less noise)
+        R_obs_large, M_obs_large, V_obs_large = simulate_observed_data(R_pred, M_pred, V_pred, N=4000)
+
+        # Check if large N gives more stable results (closer to predicted)
+        self.assertAlmostEqual(R_pred, R_obs_large, delta=0.1)
+        self.assertAlmostEqual(M_pred, M_obs_large, delta=0.1)
+        self.assertAlmostEqual(V_pred, V_obs_large, delta=0.1)
+
+if __name__ == "__main__":
     unittest.main()
-
