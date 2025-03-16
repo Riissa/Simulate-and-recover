@@ -5,7 +5,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from generate import forward_equations #import error? 
+from src.generate import forward_equations #import error? 
 
 class TestForwardEquations(unittest.TestCase):
     #checks that when function_equations is given valid imputs it produces valid outputs 

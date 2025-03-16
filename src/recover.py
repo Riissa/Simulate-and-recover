@@ -22,7 +22,7 @@ def inverse_equations(R_obs, M_obs, V_obs):
 
     # Step 1: Compute L (log odds of accuracy)
     L = np.log(R_obs / (1 - R_obs))
-    
+
      # Ensure V_obs is not too small (avoiding divide-by-zero errors)
     V_obs = max(V_obs, 1e-6)
 

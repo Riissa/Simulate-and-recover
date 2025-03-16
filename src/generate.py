@@ -4,15 +4,12 @@
 import numpy as np
 
 def forward_equations(alpha, nu, tau):
-    """
-    Computes predicted summary statistics (R_pred, M_pred, V_pred)
-    using the forward EZ diffusion model equations.
-    
+    """  
     Parameters:
     - alpha: Boundary separation (between 0.5 and 2)
     - nu: Drift rate (between 0.5 and 2)
     - tau: Non-decision time (between 0.1 and 0.5)
-    
+ 
     Returns:
     - R_pred: Predicted accuracy rate
     - M_pred: Predicted mean reaction time
