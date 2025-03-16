@@ -3,7 +3,6 @@ from generate import forward_equations
 
 def simulate_observed_data(R_pred, M_pred, V_pred, N,trial_num):
    
-
     """
     Simulates observed summary statistics (R_obs, M_obs, V_obs) by adding noise.
 
@@ -19,22 +18,17 @@ def simulate_observed_data(R_pred, M_pred, V_pred, N,trial_num):
     - V_obs: Simulated observed variance of reaction time
     """
     if trial_num < 3:
-        print(f"Debug (Simulate Before Noise): R_pred={R_pred}, M_pred={M_pred}, V_pred={V_pred}, N={N}")
+        print(f"Debug (Simulate Before Noise): R_pred={R_pred:.4f}, M_pred={M_pred:.4f}, V_pred={V_pred:.4f}, N={N}")
+
 
     #Clamp R_pred before binomial sampling
-    R_pred = min(max(R_pred, 0.01), 0.99)
+    R_pred = np.clip(R_pred, 0.01, 0.99)
     # Equation 7: Simulate observed accuracy rate (Binomial Distribution)
-    T_obs = np.random.binomial(N, R_pred)  
-    R_obs = T_obs / N 
-
-    # Simulate correct responses safely
-    k = np.random.binomial(N, R_pred)
+    k = np.random.binomial(N, R_pred)  
     R_obs = min(max(k / N, 0.01), 0.99)
 
     #Equation 8: Simulate observed mean reaction time (Normal Distribution)
-    ####sigma_M = np.sqrt(max(V_pred / N, 1e-6))  
-    #####M_obs = M_pred + np.random.normal(0, sigma_M)
-    sigma_M = np.sqrt(V_pred / N)  
+    sigma_M = np.sqrt(max(V_pred / N, 1e-6))  
     M_obs = np.random.normal(M_pred, sigma_M)
 
     ####sigma_V = max(V_pred / np.sqrt(N), 1e-6)  
@@ -43,11 +37,12 @@ def simulate_observed_data(R_pred, M_pred, V_pred, N,trial_num):
     if N > 1:
         shape_param = (N - 1) / 2
         scale_param = (2 * V_pred) / (N - 1)
-        V_obs = np.random.gamma(shape_param, scale_param)  
+        V_obs = np.random.gamma(shape_param, scale_param)
     else:
-        V_obs = V_pred  # Default to predicted variance if N=1
-   
+    # For N = 1, add noise to V_pred
+        V_obs = max(V_pred * (1 + np.random.normal(0, 0.1)), 1e-6)
     return R_obs, M_obs, V_obs
+
 
     
     
