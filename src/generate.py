@@ -19,9 +19,15 @@ def forward_equations(alpha, nu, tau):
         raise ValueError("Input values out of range")
 
     y = np.exp(-alpha * nu)
+    #Eqn 1
     R_pred = 1 / (y + 1)
+    #Eqn 2
     M_pred = tau + (alpha / (2 * nu)) * ((1 - y) / (1 + y))
-    V_pred = (alpha / (2 * nu**3)) * ((1 - 2 * alpha * nu * y - y**2) / (y + 1)**2)
+    #Eqn 3
+    ##V_pred = (alpha / (2 * nu**3)) * ((1 - 2 * alpha * nu * y - y**2) / (y + 1)**2)
+    V_pred = (alpha / (2 * nu**3)) * ((1 + y - 2 * y * alpha * nu) / (1 + y)**2)
+
+    #print(f"Debug (Generate Output): R_pred={R_pred}, M_pred={M_pred}, V_pred={V_pred}")
 
     return R_pred, M_pred, V_pred
 

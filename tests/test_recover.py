@@ -53,8 +53,8 @@ class TestRecover(unittest.TestCase):
         from simulate import simulate_observed_data
         
         # Actually simulate data with different sample sizes
-        R_obs_small, M_obs_small, V_obs_small = simulate_observed_data(nu_true, alpha_true, tau_true, N_small)
-        R_obs_large, M_obs_large, V_obs_large = simulate_observed_data(nu_true, alpha_true, tau_true, N_large)
+        R_obs_small, M_obs_small, V_obs_small = simulate_observed_data(nu_true, alpha_true, tau_true, N_small, trial_num=3)
+        R_obs_large, M_obs_large, V_obs_large = simulate_observed_data(nu_true, alpha_true, tau_true, N_large, trial_num=3)
 
         # Recover estimated parameters
         nu_est_small, alpha_est_small, tau_est_small = inverse_equations(R_obs_small, M_obs_small, V_obs_small)
