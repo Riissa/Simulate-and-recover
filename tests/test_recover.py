@@ -18,29 +18,6 @@ class TestRecover(unittest.TestCase):
         self.assertGreater(alpha_est, 0, "Boundary separation (α) should be positive")
         self.assertTrue(0.1 <= tau_est <= 0.5, "Non-decision time (τ) should be within range")
 
-    # def test_improved_accuracy_with_large_N(self):
-    #     """Test if larger N improves the accuracy of estimated parameters."""
-    #     N_small = 10
-    #     N_large = 4000
-
-    #     # Generate reasonable true values
-    #     alpha_true, nu_true, tau_true = np.random.uniform(0.5, 2), np.random.uniform(0.5, 2), np.random.uniform(0.1, 0.5)
-
-    #     # Simulate predicted values
-    #     R_obs_small, M_obs_small, V_obs_small = 0.6, 0.4, 0.02  # Simulated for N_small
-    #     R_obs_large, M_obs_large, V_obs_large = 0.6, 0.4, 0.02  # Simulated for N_large
-
-    #     # Recover estimated parameters
-    #     nu_est_small, alpha_est_small, tau_est_small = inverse_equations(R_obs_small, M_obs_small, V_obs_small)
-    #     nu_est_large, alpha_est_large, tau_est_large = inverse_equations(R_obs_large, M_obs_large, V_obs_large)
-
-    #     # Compute squared errors
-    #     bias_small = np.array([nu_true, alpha_true, tau_true]) - np.array([nu_est_small, alpha_est_small, tau_est_small])
-    #     bias_large = np.array([nu_true, alpha_true, tau_true]) - np.array([nu_est_large, alpha_est_large, tau_est_large])
-
-    #     # Check that squared error is lower for large N
-    #     self.assertLess(np.sum(bias_large**2), np.sum(bias_small**2), "Squared error should be lower for larger N")
-
     def test_improved_accuracy_with_large_N(self):
         """Test if larger N improves the accuracy of estimated parameters."""
         N_small = 10
