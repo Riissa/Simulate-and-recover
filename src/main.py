@@ -1,10 +1,6 @@
 #should call generate.py first 
-#calls simulate.py
-#calls recover.py  AFTER simulate.py 
-
-# should call generate.py first 
-# calls simulate.py
-# calls recover.py  AFTER simulate.py 
+#then call simulate.py
+#then call recover.py  AFTER simulate.py 
 
 import numpy as np
 from generate import forward_equations
@@ -84,6 +80,7 @@ def main():
 if __name__ == "__main__":
     main()
 
+   #Co-written w/ help of chatGPT
 
 
 '''

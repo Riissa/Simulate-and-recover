@@ -1,29 +1,14 @@
 import numpy as np
 from simulate import simulate_observed_data  # ✅ Correct absolute import
 
-import numpy as np
-
-def inverse_equations(R_obs, M_obs, V_obs):
-    """
-    Computes estimated parameters (nu_est, alpha_est, tau_est)
-    using the inverse EZ equations.
-
-    Parameters:
-    - R_obs: Observed accuracy rate
-    - M_obs: Observed mean reaction time
-    - V_obs: Observed variance of reaction time
-
-    Returns:
-    - nu_est: Estimated drift rate
-    - alpha_est: Estimated boundary separation
-    - tau_est: Estimated non-decision time
-  """
-import numpy as np
-
 def inverse_equations(R_obs, M_obs, V_obs):
     """
     Recover estimated parameters using inverse EZ equations.
     """
+    #test
+    if not (0 <= R_obs <= 1):
+        raise ValueError("R_obs must be between 0 and 1")
+
     try:
         # Ensure R_obs is within valid range (0.001 to 0.999 to avoid log issues)
         R_obs = np.clip(R_obs, 0.001, 0.999)
@@ -55,6 +40,7 @@ def inverse_equations(R_obs, M_obs, V_obs):
     except (ValueError, ZeroDivisionError, RuntimeWarning):
         return 0, 0, M_obs  # Assign default values in case of failure
 
+#Co-written w/ help of chatGPT
 
 
 #Previous code that kinda works    

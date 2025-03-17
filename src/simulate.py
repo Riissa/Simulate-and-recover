@@ -43,6 +43,8 @@ def simulate_observed_data(R_pred, M_pred, V_pred, N,trial_num):
         V_obs = max(V_pred * (1 + np.random.normal(0, 0.1)), 1e-6)
     return R_obs, M_obs, V_obs
 
+    #Co-written w/ help of chatGPT
+
 
     
     

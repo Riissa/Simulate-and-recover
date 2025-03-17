@@ -31,7 +31,7 @@ def forward_equations(alpha, nu, tau):
 
     return R_pred, M_pred, V_pred
 
-   
+   #Co-written w/ help of chatGPT
    
    
    
