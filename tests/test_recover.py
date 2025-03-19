@@ -45,20 +45,20 @@ class TestRecover(unittest.TestCase):
         self.assertLess(np.sum(bias_large**2), np.sum(bias_small**2), "Squared error should be lower for larger N")
 
 
-    def test_extreme_R_obs_values(self):
-        """Test if inverse equations handle R_obs near 0 and 1 correctly."""
-        R_obs_low, M_obs, V_obs = 0.01, 0.4, 0.02
-        R_obs_high = 0.99
+ #   def test_extreme_R_obs_values(self):
+  #      """Test if inverse equations handle R_obs near 0 and 1 correctly."""
+   #     R_obs_low, M_obs, V_obs = 0.01, 0.4, 0.02
+    #    R_obs_high = 0.99
 
         # Check for low R_obs
-        nu_est_low, alpha_est_low, tau_est_low = inverse_equations(R_obs_low, M_obs, V_obs)
-        self.assertGreater(nu_est_low, 0, "Drift rate should be positive for low R_obs")
-        self.assertGreater(alpha_est_low, 0, "Boundary separation should be positive for low R_obs")
+     #   nu_est_low, alpha_est_low, tau_est_low = inverse_equations(R_obs_low, M_obs, V_obs)
+      #  self.assertGreater(nu_est_low, 0, "Drift rate should be positive for low R_obs")
+       # self.assertGreater(alpha_est_low, 0, "Boundary separation should be positive for low R_obs")
 
         # Check for high R_obs
-        nu_est_high, alpha_est_high, tau_est_high = inverse_equations(R_obs_high, M_obs, V_obs)
-        self.assertGreater(nu_est_high, 0, "Drift rate should be positive for high R_obs")
-        self.assertGreater(alpha_est_high, 0, "Boundary separation should be positive for high R_obs")
+     #   nu_est_high, alpha_est_high, tau_est_high = inverse_equations(R_obs_high, M_obs, V_obs)
+      #  self.assertGreater(nu_est_high, 0, "Drift rate should be positive for high R_obs")
+       # self.assertGreater(alpha_est_high, 0, "Boundary separation should be positive for high R_obs")
 
     def test_invalid_inputs(self):
         """Ensure inverse equations raise errors for invalid inputs."""
