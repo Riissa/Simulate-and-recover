@@ -22,8 +22,13 @@ def inverse_equations(R_obs, M_obs, V_obs):
 
         # Compute drift rate (ν)
         sqrt_term = (L * (R_obs**2 * L - R_obs * L + R_obs - 0.5)) / (V_obs + 1e-6)
-        sqrt_term = max(sqrt_term, 1e-6)  # Avoid negative sqrt issue
-        nu_est = np.sign(R_obs - 0.5) * 4 * np.sqrt(sqrt_term)
+        ##sqrt_term = max(sqrt_term, 1e-6)  # Avoid negative sqrt issue #TESTING
+        ##nu_est = np.sign(R_obs - 0.5) * 4 * np.sqrt(sqrt_term) #TESTTING
+        sqrt_term = max(sqrt_term, 1e-10) #to avoid negative sqrt issue
+        nu_est = np.sign(R_obs - 0.5) * (sqrt_term ** 0.25)  # Power of 1/4 instead of sqrt
+        ##if sqrt_term < 0: #OG
+         ##   return 0, 0, M_obs  # Assign default values if sqrt_term is negative
+        ##nu_est = np.sign(R_obs - 0.5) * 4 * np.sqrt(sqrt_term)
 
         # Compute boundary separation (α)
         alpha_est = L / nu_est if nu_est != 0 else 0
