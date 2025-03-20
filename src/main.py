@@ -88,8 +88,8 @@ def main():
 
             with open("results.txt", "a") as file:  # Append mode to keep results for each N
                 file.write(f"\nN={N}\n")
-                file.write(f"Average Bias:    [{ ' '.join(f'{val:.8f}' for val in avg_bias) }]\n")
-                file.write(f"Average Squared Error: [{ ' '.join(f'{val:.8f}' for val in avg_squared_error) }]\n\n")
+                file.write(f"Average Bias: [ ν = {avg_bias[0]:.6f}, α = {avg_bias[1]:.6f}, τ = {avg_bias[2]:.6f} ]\n")
+                file.write(f"Average Squared Error: [ ν = {avg_squared_error[0]:.6f}, α = {avg_squared_error[1]:.6f}, τ = {avg_squared_error[2]:.6f} ]\n\n")
 
                 print(f"Results saved to {output_file}")
 
