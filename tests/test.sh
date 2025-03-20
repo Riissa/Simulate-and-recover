@@ -1,5 +1,6 @@
-#fill in later
 #!/bin/bash
 
-# Run all tests in the 'tests' directory
-python3 -m unittest discover -s tests
+echo "Running tests..."
+python3 -m unittest tests/test_generate.py
+python3 -m unittest tests/test_simulate.py
+python3 -m unittest tests/test_recover.py
