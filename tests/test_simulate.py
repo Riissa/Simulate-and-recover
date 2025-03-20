@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from simulate import simulate_observed_data  # Import the correct function
+from src.simulate import simulate_observed_data  # Import the correct function
 
 class TestSimulateObservedData(unittest.TestCase):
     
