@@ -3,6 +3,8 @@
 #then call recover.py  AFTER simulate.py 
 
 import numpy as np
+import os 
+import sys
 from generate import forward_equations
 from simulate import simulate_observed_data
 from recover import inverse_equations
@@ -30,12 +32,15 @@ def main():
     Runs the full simulate-and-recover loop for sample sizes N = 10, 40, 4000.
     Computes bias and squared error for each sample size.
     """
+
     N_values = [10, 40, 4000]  # Different sample sizes to test
     num_trials = 1000  # Number of iterations
 
     print("\n=== Running Simulate-and-Recover Experiment ===\n")
- 
+    
+
     for N in N_values:
+
         print(f"Running {num_trials} trials for N = {N}...")
 
         total_bias = np.zeros(3)
@@ -52,11 +57,11 @@ def main():
             #Simulate observed summary statistics (add noise)
             R_obs, M_obs, V_obs = simulate_observed_data(R_pred, M_pred, V_pred, N, trial_num=i)
 
-            # ✅ Print debug info **only for the first 3 iterations**
-            if i < 3:
-                print(f"Debug (Generate Output - Trial {i+1}): R_pred={R_pred}, M_pred={M_pred}, V_pred={V_pred}")
-                print(f"Debug (Simulate Before Noise - Trial {i+1}): R_pred={R_pred}, M_pred={M_pred}, V_pred={V_pred}, N={N}")
-                print(f"Debug (Simulate After Noise - Trial {i+1}): R_obs={R_obs}, M_obs={M_obs}, V_obs={V_obs}")
+            # Print debug info **only for the first 3 iterations**
+            #if i < 3:
+             #   print(f"Debug (Generate Output - Trial {i+1}): R_pred={R_pred}, M_pred={M_pred}, V_pred={V_pred}")
+              #  print(f"Debug (Simulate Before Noise - Trial {i+1}): R_pred={R_pred}, M_pred={M_pred}, V_pred={V_pred}, N={N}")
+               # print(f"Debug (Simulate After Noise - Trial {i+1}): R_obs={R_obs}, M_obs={M_obs}, V_obs={V_obs}")
 
             # Step 4: Recover estimated parameters
             nu_est, alpha_est, tau_est = inverse_equations(R_obs, M_obs, V_obs)
@@ -76,6 +81,7 @@ def main():
         print(f"  Avg Bias:      ν = {avg_bias[0]:.6f}, α = {avg_bias[1]:.6f}, τ = {avg_bias[2]:.6f}")
         print(f"  Avg Squared Error:  ν = {avg_squared_error[0]:.6f}, α = {avg_squared_error[1]:.6f}, τ = {avg_squared_error[2]:.6f}\n")
 
+        # Reset standard output back to console
 
 if __name__ == "__main__":
     main()

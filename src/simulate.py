@@ -17,8 +17,8 @@ def simulate_observed_data(R_pred, M_pred, V_pred, N,trial_num):
     - M_obs: Simulated observed mean reaction time
     - V_obs: Simulated observed variance of reaction time
     """
-    if trial_num < 3:
-        print(f"Debug (Simulate Before Noise): R_pred={R_pred:.4f}, M_pred={M_pred:.4f}, V_pred={V_pred:.4f}, N={N}")
+   # if trial_num < 3:
+    #    print(f"Debug (Simulate Before Noise): R_pred={R_pred:.4f}, M_pred={M_pred:.4f}, V_pred={V_pred:.4f}, N={N}")
 
 
     #Clamp R_pred before binomial sampling
